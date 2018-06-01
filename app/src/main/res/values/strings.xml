@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Best Alarm</string>
+
+    <string name="add_alarm">Add</string>
+    <string name="alarm_settings">Settings</string>
+
+    <string name="vibration_off">Vibration off</string>
+    <string name="vibration_on">Vibration on</string>
 </resources>
