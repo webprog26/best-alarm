@@ -1,12 +1,17 @@
 package com.example.webprog26.bestalarm;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -32,6 +37,14 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         super.onCreate(savedInstanceState);
         this.mainFragmentPresenter = new MainFragmentPresenterImpl();
         mainFragmentPresenter.setMainFragmentView(this);
+
+        if (alarmsViewModel != null) {
+            alarmsViewModel.getListAlarms().observe(this, alarms -> {
+                for (final Alarm alarm: alarms) {
+                    Log.i(MainActivity.MAIN_DEBUG, alarm.toString());
+                }
+            });
+        }
     }
 
     @Override

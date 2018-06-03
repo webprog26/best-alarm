@@ -1,15 +1,11 @@
 package com.example.webprog26.bestalarm;
 
-import android.app.FragmentManager;
+
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements MainView, BaseFragment.MainInteractor{
 
@@ -25,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements MainView, BaseFra
         mainPresenter.setMainView(this);
 
         if(savedInstanceState == null) {
-            final FragmentManager fragmentManager = getFragmentManager();
+            final FragmentManager fragmentManager = getSupportFragmentManager();
             final BaseFragment mainFragment = (BaseFragment) fragmentManager.findFragmentByTag(MainFragment.MAIN_FRAGMENT_TAG);
 
             if (mainFragment == null) {
@@ -57,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements MainView, BaseFra
     @NonNull
     @Override
     public FragmentManager getMainFragmentManager() {
-        return getFragmentManager();
+        return getSupportFragmentManager();
     }
 
     @Override

@@ -1,9 +1,10 @@
 package com.example.webprog26.bestalarm;
 
-import android.app.Fragment;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,14 @@ public abstract class BaseFragment extends Fragment {
 
     protected Unbinder mUnbinder;
     protected MainInteractor mainInteractor;
+
+    protected AlarmsViewModel alarmsViewModel;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        alarmsViewModel = ViewModelProviders.of(this).get(AlarmsViewModel.class);
+    }
 
     @Override
     public void onAttach(Context context) {

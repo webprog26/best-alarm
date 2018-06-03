@@ -6,4 +6,7 @@
 
     <string name="vibration_off">Vibration off</string>
     <string name="vibration_on">Vibration on</string>
+
+    <string name="repeat_on">Repeat</string>
+    <string name="repeat_off">Don\'t repeat</string>
 </resources>
