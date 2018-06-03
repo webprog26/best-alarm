@@ -1,8 +1,8 @@
 package com.example.webprog26.bestalarm;
 
-import android.app.FragmentManager;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 
 /**
  * Created by webprog26 on 01.06.18.
