@@ -19,4 +19,6 @@
     <string name="alarm_repeat_off">Repeat off</string>
 
     <string name="delete_alarm">Delete alarm</string>
+
+    <string name="label">Label</string>
 </resources>

@@ -1,7 +1,11 @@
 package com.example.webprog26.bestalarm;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +18,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by webprog26 on 01.06.18.
@@ -130,6 +136,31 @@ public class AddAlarmFragment extends BaseFragment {
 
         mAlarmLabelContainer.setOnClickListener((v) -> {
             Log.i(MainActivity.MAIN_DEBUG, "Alarm label container clicked");
+            final Context activityContext = getActivity();
+
+            if (activityContext != null) {
+                final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(activityContext);
+
+                final View addAlarmLabelView = ((Activity)activityContext).getLayoutInflater().inflate(R.layout.alarm_label_input_dialog, null);
+
+                addAlarmLabelView.findViewById(R.id.btn_alarm_label_cancel).setOnClickListener((cancelView)
+                -> bottomSheetDialog.dismiss());
+
+                addAlarmLabelView.findViewById(R.id.btn_alarm_label_ok).setOnClickListener((cancelView)
+                        -> {
+                    final TextInputLayout alarmLabelInputLayout = addAlarmLabelView.findViewById(R.id.til_alarm_label);
+                    final String userLabel = alarmLabelInputLayout.getEditText().getText().toString();
+                    if (!userLabel.equals(mTvAlarmLabel.getText().toString())) {
+                        mTvAlarmLabel.setText(userLabel);
+                    }
+                    bottomSheetDialog.dismiss();
+                });
+
+                bottomSheetDialog.setContentView(addAlarmLabelView);
+                bottomSheetDialog.show();
+
+            }
+
         });
     }
 
