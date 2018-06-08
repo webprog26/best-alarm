@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -43,6 +44,9 @@ public class AddAlarmFragment extends BaseFragment {
 
     @BindView(R.id.tv_alarm_label)
     TextView mTvAlarmLabel;
+
+    @BindView(R.id.btn_delete_alarm)
+    Button mBtnDeleteAlarm;
 
     public static AddAlarmFragment newInstance(final int alarmId) {
         Bundle args = new Bundle();
@@ -81,13 +85,22 @@ public class AddAlarmFragment extends BaseFragment {
                        }
                    });
                }
+
+               mBtnDeleteAlarm.setVisibility(View.VISIBLE);
+               mBtnDeleteAlarm.setOnClickListener((v) ->{
+                   if (alarmsViewModel != null) {
+                       alarmsViewModel.deleteAlarm(getAlarmInstanceOf(alarmId),
+                               () -> mainInteractor.loadMainFragment());
+                   }
+               });
+
             }
 
             mBtnAlarmDone.setOnClickListener((v) -> {
                 if (alarmId == NEW_ALARM_ID) {
-                    alarmsViewModel.addAlarm(createAlarm());
+                    alarmsViewModel.addAlarm(getAlarmNewInstance());
                 } else {
-                    alarmsViewModel.updateAlarm(updateAlarm(alarmId));
+                    alarmsViewModel.updateAlarm(getAlarmInstanceOf(alarmId));
                 }
 
                 mainInteractor.loadMainFragment();
@@ -120,7 +133,7 @@ public class AddAlarmFragment extends BaseFragment {
         });
     }
 
-    private Alarm createAlarm(){
+    private Alarm getAlarmNewInstance(){
         final Alarm alarm = new Alarm();
         alarm.setLabel(String.valueOf(mTvAlarmLabel.getText()));
         alarm.setHours(mTpAlarm.getCurrentHour());
@@ -132,7 +145,7 @@ public class AddAlarmFragment extends BaseFragment {
         return alarm;
     }
 
-    private Alarm updateAlarm(final int alarmId) {
+    private Alarm getAlarmInstanceOf(final int alarmId) {
         final Alarm alarm = new Alarm();
 
         alarm.setId(alarmId);
