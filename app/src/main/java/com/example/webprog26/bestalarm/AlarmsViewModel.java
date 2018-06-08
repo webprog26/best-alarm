@@ -30,6 +30,14 @@ public class AlarmsViewModel extends AndroidViewModel {
         new AddAlarmTask(App.getAlarmsDatabase()).execute(alarm);
     }
 
+    public void  getAlarmById(final int alarmId, final OnAlarmFoundByIdListener listener) {
+        new AlarmByIdTask(App.getAlarmsDatabase(), listener).execute(alarmId);
+    }
+
+    public void updateAlarm(final Alarm alarm) {
+        new UpdateAlarmTask(App.getAlarmsDatabase()).execute(alarm);
+    }
+
     private static class AddAlarmTask extends AsyncTask<Alarm, Void, Void> {
 
         private final AlarmsDatabase alarmsDatabase;
@@ -45,7 +53,7 @@ public class AlarmsViewModel extends AndroidViewModel {
         }
     }
 
-    private static class AlarmByIdTask extends AsyncTask<Long, Void, Alarm> {
+    private static class AlarmByIdTask extends AsyncTask<Integer, Void, Alarm> {
 
         private final AlarmsDatabase alarmsDatabase;
         private final OnAlarmFoundByIdListener listener;
@@ -56,7 +64,7 @@ public class AlarmsViewModel extends AndroidViewModel {
         }
 
         @Override
-        protected Alarm doInBackground(Long... ids) {
+        protected Alarm doInBackground(Integer... ids) {
             return alarmsDatabase.getAlarmDao().getAlarmEntityById(ids[0]);
         }
 
@@ -71,6 +79,21 @@ public class AlarmsViewModel extends AndroidViewModel {
                     listener.onError();
                 }
             }
+        }
+    }
+
+    private static class UpdateAlarmTask extends AsyncTask<Alarm, Void, Void> {
+
+        private final AlarmsDatabase alarmsDatabase;
+
+        public UpdateAlarmTask(AlarmsDatabase alarmsDatabase) {
+            this.alarmsDatabase = alarmsDatabase;
+        }
+
+        @Override
+        protected Void doInBackground(Alarm... alarms) {
+            alarmsDatabase.getAlarmDao().updateAlarm(alarms[0]);
+            return null;
         }
     }
 
