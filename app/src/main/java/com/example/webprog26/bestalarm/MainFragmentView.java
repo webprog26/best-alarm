@@ -8,4 +8,5 @@ public interface MainFragmentView {
 
     void addAlarmClicked();
     void showAlarmSettingsClicked();
+    void loadAlarmEditor(final int alarmId);
 }

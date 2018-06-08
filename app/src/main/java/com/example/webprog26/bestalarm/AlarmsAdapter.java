@@ -2,6 +2,7 @@ package com.example.webprog26.bestalarm;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
@@ -25,10 +26,14 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
     private final Context mContext;
 
     @NonNull
+    private final MainFragment.OnAlarmClickedListener mOnAlarmClickedListener;
+
+    @NonNull
     private List<Alarm> mAlarmsList = new ArrayList<>();
 
-    public AlarmsAdapter(@NonNull final Context context) {
+    public AlarmsAdapter(@NonNull final Context context, @NonNull final MainFragment.OnAlarmClickedListener listener) {
         this.mContext = context;
+        this.mOnAlarmClickedListener = listener;
     }
 
     @NonNull
@@ -74,6 +79,8 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
             mTvAlarmIsRepeatable.setText(alarm.isRepeatable() ? mContext.getString(R.string.alarm_repeat_on)
                     : mContext.getString(R.string.alarm_repeat_off));
             mSwAlarmIsActive.setChecked(alarm.isActive());
+
+            itemView.setOnClickListener((v) -> mOnAlarmClickedListener.onAlarmClicked(alarm.getId()));
         }
 
         private String getMinutesString(final int minutes) {

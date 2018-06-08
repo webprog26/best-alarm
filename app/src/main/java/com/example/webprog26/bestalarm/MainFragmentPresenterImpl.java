@@ -29,4 +29,9 @@ public class MainFragmentPresenterImpl implements MainFragment.MainFragmentPrese
             }
         }
     }
+
+    @Override
+    public void loadUiToEditAlarm(int alarmId) {
+        mainFragmentView.loadAlarmEditor(alarmId);
+    }
 }

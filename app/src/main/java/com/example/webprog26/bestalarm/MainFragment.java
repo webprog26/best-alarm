@@ -50,7 +50,9 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         final Context activityContext = getActivity();
 
         if (activityContext != null) {
-            this.mAlarmsAdapter = new AlarmsAdapter(activityContext);
+            this.mAlarmsAdapter = new AlarmsAdapter(activityContext, (alarmId) -> {
+                mainFragmentPresenter.loadUiToEditAlarm(alarmId);
+            });
         }
 
         if (alarmsViewModel != null) {
@@ -97,6 +99,8 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         void setMainFragmentView(@NonNull final MainFragmentView mainFragmentView);
 
         void controlClicked(final int id);
+
+        void loadUiToEditAlarm(final int alarmId);
     }
 
     @Override
@@ -111,5 +115,18 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         if (mainInteractor != null) {
             mainInteractor.showAlarmSettingsUi();
         }
+    }
+
+
+
+    @Override
+    public void loadAlarmEditor(int alarmId) {
+        if (mainInteractor != null) {
+            mainInteractor.loadAlarmEditor(alarmId);
+        }
+    }
+
+    public interface OnAlarmClickedListener{
+        void onAlarmClicked(final int alarmId);
     }
 }

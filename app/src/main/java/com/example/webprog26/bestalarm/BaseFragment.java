@@ -78,5 +78,7 @@ public abstract class BaseFragment extends Fragment {
         void showAlarmSettingsUi();
 
         void loadMainFragment();
+
+        void loadAlarmEditor(final int alarmId);
     }
 }

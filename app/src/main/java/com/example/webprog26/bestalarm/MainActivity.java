@@ -50,6 +50,11 @@ public class MainActivity extends AppCompatActivity implements MainView, BaseFra
         }
     }
 
+    @Override
+    public void loadAlarmEditor(int alarmId) {
+        mainPresenter.loadAlarmEditor(alarmId);
+    }
+
     @NonNull
     @Override
     public FragmentManager getMainFragmentManager() {
@@ -69,5 +74,7 @@ public class MainActivity extends AppCompatActivity implements MainView, BaseFra
         void loadAlarmSettingsView();
 
         void loadMainFragment();
+
+        void loadAlarmEditor(final int alarmId);
     }
 }
