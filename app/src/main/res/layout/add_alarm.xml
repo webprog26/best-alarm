@@ -68,7 +68,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:clickable="true"
-            android:focusable="true">
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackground">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -86,6 +87,15 @@
                 android:textColor="@android:color/black" />
 
         </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_delete_alarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="?android:attr/borderlessButtonStyle"
+            android:text="@string/delete_alarm"
+            android:textColor="@android:color/holo_red_light"
+            android:visibility="gone"/>
 
     </LinearLayout>
 

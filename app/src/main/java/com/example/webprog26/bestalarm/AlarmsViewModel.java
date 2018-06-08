@@ -38,6 +38,10 @@ public class AlarmsViewModel extends AndroidViewModel {
         new UpdateAlarmTask(App.getAlarmsDatabase()).execute(alarm);
     }
 
+    public void deleteAlarm(final Alarm alarm, final OnAlarmDeletedListener listener){
+        new DeleteAlarmTask(App.getAlarmsDatabase(), listener).execute(alarm);
+    }
+
     private static class AddAlarmTask extends AsyncTask<Alarm, Void, Void> {
 
         private final AlarmsDatabase alarmsDatabase;
@@ -97,10 +101,39 @@ public class AlarmsViewModel extends AndroidViewModel {
         }
     }
 
+    private static class DeleteAlarmTask extends AsyncTask<Alarm, Void, Void> {
+
+        private final AlarmsDatabase alarmsDatabase;
+        private final OnAlarmDeletedListener onAlarmDeletedListener;
+
+        public DeleteAlarmTask(AlarmsDatabase alarmsDatabase, OnAlarmDeletedListener listener) {
+            this.alarmsDatabase = alarmsDatabase;
+            this.onAlarmDeletedListener = listener;
+        }
+
+        @Override
+        protected Void doInBackground(Alarm... alarms) {
+            alarmsDatabase.getAlarmDao().deleteAlarm(alarms[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            if (onAlarmDeletedListener != null) {
+                onAlarmDeletedListener.onAlarmDeleted();
+            }
+        }
+    }
+
     public interface OnAlarmFoundByIdListener {
         void onAlarmFound(final Alarm alarm);
 
         void onError();
+    }
+
+    public interface OnAlarmDeletedListener{
+        void onAlarmDeleted();
     }
 
 }
