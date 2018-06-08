@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import butterknife.BindView;
@@ -33,6 +35,9 @@ public class AddAlarmFragment extends BaseFragment {
     @BindView(R.id.sw_is_repeatable)
     SwitchCompat mSwIsRepeatable;
 
+    @BindView(R.id.alarm_label_container)
+    RelativeLayout mAlarmLabelContainer;
+
     @Override
     protected View getContentView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.add_alarm, container, false);
@@ -57,14 +62,20 @@ public class AddAlarmFragment extends BaseFragment {
         mBtnCancel.setOnClickListener((v) -> {
             mainInteractor.loadMainFragment();
         });
+
+        mAlarmLabelContainer.setOnClickListener((v) -> {
+            Log.i(MainActivity.MAIN_DEBUG, "Alarm label container clicked");
+        });
     }
 
     private Alarm createAlarm(){
         final Alarm alarm = new Alarm();
+        alarm.setLabel(String.valueOf(((TextView)mAlarmLabelContainer.findViewById(R.id.tv_alarm_label)).getText()));
         alarm.setHours(mTpAlarm.getCurrentHour());
         alarm.setMinutes(mTpAlarm.getCurrentMinute());
         alarm.setVibrate(mSwIsVibrate.isChecked());
         alarm.setRepeatable(mSwIsRepeatable.isChecked());
+        alarm.setActive(true);
 
         return alarm;
     }

@@ -2,9 +2,14 @@ package com.example.webprog26.bestalarm;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +35,11 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     @BindView(R.id.btn_alarm_settings)
     Button mBtnAlarmSettings;
 
+    @BindView(R.id.rv_alarms)
+    RecyclerView mRvAlarms;
+
     private MainFragmentPresenter mainFragmentPresenter;
+    private AlarmsAdapter mAlarmsAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,10 +47,23 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         this.mainFragmentPresenter = new MainFragmentPresenterImpl();
         mainFragmentPresenter.setMainFragmentView(this);
 
+        final Context activityContext = getActivity();
+
+        if (activityContext != null) {
+            this.mAlarmsAdapter = new AlarmsAdapter(activityContext);
+        }
+
         if (alarmsViewModel != null) {
             alarmsViewModel.getListAlarms().observe(this, alarms -> {
                 for (final Alarm alarm: alarms) {
+                    Log.i(MainActivity.MAIN_DEBUG, "alarms count = " + alarms.size());
                     Log.i(MainActivity.MAIN_DEBUG, alarm.toString());
+                }
+
+                if (mAlarmsAdapter != null) {
+                    mAlarmsAdapter.updateAlarmList(alarms);
+                } else {
+                    Log.i(MainActivity.MAIN_DEBUG, "mAlarmsAdapter is null");
                 }
             });
         }
@@ -56,6 +78,10 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     protected void initControlsListeners() {
         mBtnAddAlarm.setOnClickListener(this);
         mBtnAlarmSettings.setOnClickListener(this);
+        mRvAlarms.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRvAlarms.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        mRvAlarms.setItemAnimator(new DefaultItemAnimator());
+        mRvAlarms.setAdapter(mAlarmsAdapter);
     }
 
     @Override
