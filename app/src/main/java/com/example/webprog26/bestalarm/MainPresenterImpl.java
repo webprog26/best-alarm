@@ -35,7 +35,6 @@ public class MainPresenterImpl implements MainActivity.MainPresenter {
     @Override
     public void loadMainFragment() {
         if (mainView != null) {
-            Log.i(MainActivity.MAIN_DEBUG, "items " + mainView.getMainFragmentManager().getBackStackEntryCount());
             mainView.getMainFragmentManager().popBackStack();
         }
     }

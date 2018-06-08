@@ -9,4 +9,12 @@
 
     <string name="repeat_on">Repeat</string>
     <string name="repeat_off">Don\'t repeat</string>
+
+    <string name="alarm_label">Label</string>
+    <string name="alarm_label_default">Alarm</string>
+
+    <string name="alarm_time">%d:%s</string>
+
+    <string name="alarm_repeat_on">Repeat on</string>
+    <string name="alarm_repeat_off">Repeat off</string>
 </resources>

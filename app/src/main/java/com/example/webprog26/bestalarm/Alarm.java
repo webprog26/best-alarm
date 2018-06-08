@@ -13,6 +13,8 @@ public class Alarm {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
+    private String label;
+
     private int hours;
 
     private int minutes;
@@ -21,12 +23,22 @@ public class Alarm {
 
     private boolean isRepeatable;
 
+    private boolean isActive;
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public int getHours() {
@@ -61,13 +73,23 @@ public class Alarm {
         isRepeatable = repeatable;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
     @Override
     public String toString() {
         return getClass().getSimpleName() +
                 " with id " + getId() +
+                " with label " + getLabel() +
                 " with hours " + hours +
                 " with minutes " + minutes +
                 " is vibrate " + isVibrate +
-                " is repeatable " + String.valueOf(isRepeatable);
+                " is repeatable " + String.valueOf(isRepeatable) +
+                " is active " + String.valueOf(isActive);
     }
 }
