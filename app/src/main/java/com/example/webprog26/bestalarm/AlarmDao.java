@@ -21,6 +21,9 @@ public interface AlarmDao {
     @Query("SELECT * from alarms")
     LiveData<List<Alarm>> getAllAlarms();
 
+    @Query("SELECT * from alarms")
+    List<Alarm> getAlarmsList();
+
     @Query("SELECT * from alarms WHERE id = :id")
     Alarm getAlarmEntityById(final long id);
 

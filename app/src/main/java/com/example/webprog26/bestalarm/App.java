@@ -2,7 +2,6 @@ package com.example.webprog26.bestalarm;
 
 import android.app.Application;
 import android.arch.persistence.room.Room;
-import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 /**
