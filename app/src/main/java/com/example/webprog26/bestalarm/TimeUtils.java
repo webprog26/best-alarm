@@ -1,10 +1,6 @@
 package com.example.webprog26.bestalarm;
 
-import android.util.Log;
-
 import java.util.Calendar;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by webprog26 on 23.06.18.

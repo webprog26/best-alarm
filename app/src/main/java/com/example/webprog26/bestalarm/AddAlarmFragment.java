@@ -1,13 +1,11 @@
 package com.example.webprog26.bestalarm;
 
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.AlarmManagerCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,8 +20,6 @@ import android.widget.TimePicker;
 import java.util.Calendar;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * Created by webprog26 on 01.06.18.
