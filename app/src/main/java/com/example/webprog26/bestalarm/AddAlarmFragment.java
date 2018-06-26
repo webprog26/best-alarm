@@ -1,11 +1,13 @@
 package com.example.webprog26.bestalarm;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.AlarmManagerCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +18,8 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -104,7 +108,13 @@ public class AddAlarmFragment extends BaseFragment {
 
             mBtnAlarmDone.setOnClickListener((v) -> {
                 if (alarmId == NEW_ALARM_ID) {
-                    alarmsViewModel.addAlarm(getAlarmNewInstance());
+                    final Alarm alarm = getAlarmNewInstance();
+                    alarmsViewModel.addAlarm(alarm, (addedAlarmId) -> {
+                        alarm.setId((int)addedAlarmId);
+                        Log.i(MainActivity.MAIN_DEBUG, "onAlarmAdded with id " + addedAlarmId
+                        + " and time " + TimeUtils.getMillisToTrigger(alarm, Calendar.getInstance()));
+                        AlarmSetter.setAlarm(alarm);
+                    });
                 } else {
                     alarmsViewModel.updateAlarm(getAlarmInstanceOf(alarmId));
                 }
@@ -172,20 +182,14 @@ public class AddAlarmFragment extends BaseFragment {
         alarm.setVibrate(mSwIsVibrate.isChecked());
         alarm.setRepeatable(mSwIsRepeatable.isChecked());
         alarm.setActive(true);
+        alarm.setSystemTime(System.currentTimeMillis());
 
         return alarm;
     }
 
     private Alarm getAlarmInstanceOf(final int alarmId) {
-        final Alarm alarm = new Alarm();
-
+        final Alarm alarm = getAlarmNewInstance();
         alarm.setId(alarmId);
-        alarm.setLabel(String.valueOf(mTvAlarmLabel.getText()));
-        alarm.setHours(mTpAlarm.getCurrentHour());
-        alarm.setMinutes(mTpAlarm.getCurrentMinute());
-        alarm.setVibrate(mSwIsVibrate.isChecked());
-        alarm.setRepeatable(mSwIsRepeatable.isChecked());
-        alarm.setActive(true);
 
         return alarm;
     }

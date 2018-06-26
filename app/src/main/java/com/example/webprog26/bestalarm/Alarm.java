@@ -25,6 +25,8 @@ public class Alarm {
 
     private boolean isActive;
 
+    private long systemTime;
+
     public int getId() {
         return id;
     }
@@ -81,11 +83,20 @@ public class Alarm {
         isActive = active;
     }
 
+    public long getSystemTime() {
+        return systemTime;
+    }
+
+    public void setSystemTime(long systemTime) {
+        this.systemTime = systemTime;
+    }
+
     @Override
     public String toString() {
         return getClass().getSimpleName() +
                 " with id " + getId() +
                 " with label " + getLabel() +
+                " at system time " + getSystemTime() +
                 " with hours " + hours +
                 " with minutes " + minutes +
                 " is vibrate " + isVibrate +

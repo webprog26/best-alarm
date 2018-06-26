@@ -5,8 +5,12 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by webprog26 on 03.06.18.
@@ -26,8 +30,8 @@ public class AlarmsViewModel extends AndroidViewModel {
         return mListAlarms;
     }
 
-    public void addAlarm(final Alarm alarm) {
-        new AddAlarmTask(App.getAlarmsDatabase()).execute(alarm);
+    public void addAlarm(final Alarm alarm, final OnAlarmAddedListener listener) {
+        new AddAlarmTask(App.getAlarmsDatabase(), listener).execute(alarm);
     }
 
     public void  getAlarmById(final int alarmId, final OnAlarmFoundByIdListener listener) {
@@ -42,18 +46,29 @@ public class AlarmsViewModel extends AndroidViewModel {
         new DeleteAlarmTask(App.getAlarmsDatabase(), listener).execute(alarm);
     }
 
-    private static class AddAlarmTask extends AsyncTask<Alarm, Void, Void> {
+    private static class AddAlarmTask extends AsyncTask<Alarm, Void, Long> {
 
         private final AlarmsDatabase alarmsDatabase;
+        private final OnAlarmAddedListener listener;
 
-        AddAlarmTask(AlarmsDatabase alarmsDatabase) {
+        AddAlarmTask(AlarmsDatabase alarmsDatabase, OnAlarmAddedListener listener) {
             this.alarmsDatabase = alarmsDatabase;
+            this.listener = listener;
         }
 
         @Override
-        protected Void doInBackground(Alarm... alarms) {
-            alarmsDatabase.getAlarmDao().insertAlarm(alarms[0]);
-            return null;
+        protected Long doInBackground(Alarm... alarms) {
+            final Alarm alarm = alarms[0];
+            final long addedAlarmId = alarmsDatabase.getAlarmDao().insertAlarm(alarm);
+            return addedAlarmId;
+        }
+
+        @Override
+        protected void onPostExecute(Long addedAlarmId) {
+            super.onPostExecute(addedAlarmId);
+            if (listener != null) {
+                listener.onAlarmAdded(addedAlarmId);
+            }
         }
     }
 
@@ -124,6 +139,10 @@ public class AlarmsViewModel extends AndroidViewModel {
                 onAlarmDeletedListener.onAlarmDeleted();
             }
         }
+    }
+
+    public interface OnAlarmAddedListener {
+        void onAlarmAdded(final long addedAlarmId);
     }
 
     public interface OnAlarmFoundByIdListener {

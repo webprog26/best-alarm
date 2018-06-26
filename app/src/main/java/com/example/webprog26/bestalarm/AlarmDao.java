@@ -25,7 +25,7 @@ public interface AlarmDao {
     Alarm getAlarmEntityById(final long id);
 
     @Insert
-    void insertAlarm(final Alarm alarm);
+    long insertAlarm(final Alarm alarm);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateAlarm(final Alarm alarm);
