@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">Best Alarm</string>
+
+    <string name="add_alarm">Add</string>
+    <string name="alarm_settings">Settings</string>
+
+    <string name="vibration_off">Vibration off</string>
+    <string name="vibration_on">Vibration on</string>
+
+    <string name="repeat_on">Repeat</string>
+    <string name="repeat_off">Don\'t repeat</string>
+
+    <string name="alarm_label">Label</string>
+    <string name="alarm_label_default">Alarm</string>
+
+    <string name="alarm_time">%d:%s</string>
+
+    <string name="alarm_repeat_on">Repeat on</string>
+    <string name="alarm_repeat_off">Repeat off</string>
+
+    <string name="delete_alarm">Delete alarm</string>
+
+    <string name="label">Label</string>
 </resources>
